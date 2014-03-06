@@ -16,7 +16,6 @@ class Solution:
         new_head = head.__class__(0)
         tail = None
         while p:
-            print p.val
             node = p.__class__(p.val)
             if tail and node.val > tail.val:
                 tail = self.insert(tail, tail, node)
@@ -40,7 +39,10 @@ class Solution:
 
 
 if __name__ == "__main__":
+    from datetime import datetime
     from utils import ListNode
     head = ListNode.make_list([3, 2, 1])
+    st = datetime.now()
     p = Solution().insertionSortList(head)
-    print p.to_list()
+    # print p.to_list()
+    print datetime.now() - st
