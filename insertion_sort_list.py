@@ -16,6 +16,7 @@ class Solution:
         new_head = head.__class__(0)
         tail = None
         while p:
+            print p.val
             node = p.__class__(p.val)
             if tail and node.val > tail.val:
                 tail = self.insert(tail, tail, node)
@@ -39,18 +40,7 @@ class Solution:
 
 
 if __name__ == "__main__":
-    # Definition for singly-linked list.
-    class ListNode:
-        def __init__(self, x):
-            self.val = x
-            self.next = None
-
-    n1 = ListNode(3)
-    n2 = ListNode(2)
-    n3 = ListNode(1)
-    n1.next = n2
-    n2.next = n3
-
-    p = Solution().insertionSortList(n1)
-    print p.val, p.next.val, p.next.next.val
-
+    from utils import ListNode
+    head = ListNode.make_list([3, 2, 1])
+    p = Solution().insertionSortList(head)
+    print p.to_list()
