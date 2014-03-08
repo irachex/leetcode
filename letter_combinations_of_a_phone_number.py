@@ -37,9 +37,9 @@ class Solution:
             for pool in pools:
                 result = [x + [y] for x in result for y in pool]
             for prod in result:
-                yield tuple(prod)
+                yield ''.join(prod)
 
-        return map(lambda x: ''.join(x), product(*map(MAPPING.get, digits)))
+        return product(*map(MAPPING.get, digits))
 
 
 if __name__ == "__main__":
