@@ -39,7 +39,7 @@ class Solution:
             for prod in result:
                 yield ''.join(prod)
 
-        return product(*map(MAPPING.get, digits))
+        return list(product(*map(MAPPING.get, digits)))
 
 
 if __name__ == "__main__":
