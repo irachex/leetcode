@@ -22,23 +22,8 @@ class Solution(object):
         :rtype: List[int]
         """
         a = [0 for i in xrange(num + 1)]
-        if num == 0:
-            return a
-        a[1] = 1
-        i = 2
-        b = 2
-        while i <= num:
-            j = b >> 1
-            while i <= num and i < b + (b >> 1):
-                a[i] = a[j]
-                i += 1
-                j += 1
-            j = b >> 1
-            while i <= num and i < (b << 1):
-                a[i] = a[j] + 1
-                i += 1
-                j += 1
-            b <<= 1
+        for i in xrange(1, num + 1):
+            a[i] = a[i >> 1] + (i & 1)
         return a
 
 
