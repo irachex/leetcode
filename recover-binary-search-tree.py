@@ -18,7 +18,7 @@ class TreeNode(object):
 
 
 class Solution(object):
-    def recoverTree(self, root):
+    def recoverTree(self, root):  # Morris Traversal: O(N) time, O(1) space
         """
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
