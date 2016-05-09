@@ -23,7 +23,50 @@ class Solution(object):
             p = p.next
         return self.merge_sort(head, n)
 
-    def merge_sort(self, head, n):
+    def merge_sort(self, head, n):  # non recursive
+
+        def split(p, step):
+            last = None
+            for i in xrange(step):
+                if p is None:
+                    break
+                last = p
+                p = p.next
+            if last:
+                last.next = None
+            return p
+
+        def merge(h1, h2, tail):
+            p1, p2 = h1, h2
+            while p1 or p2:
+                if not p2 or p1 and p1.val <= p2.val:
+                    tail.next = p1
+                    tail = p1
+                    p1 = p1.next
+                elif not p1 or p2 and p2.val <= p1.val:
+                    tail.next = p2
+                    tail = p2
+                    p2 = p2.next
+                else:
+                    break
+            return tail
+
+        dummy = ListNode(0)
+        dummy.next = head
+        left = right = tail = None
+        step = 1
+        while step < n:
+            p = dummy.next
+            tail = dummy
+            while p:
+                left = p
+                right = split(p, step)
+                p = split(right, step)
+                tail = merge(left, right, tail)
+            step <<= 1
+        return dummy.next
+
+    def merge_sort_recursive(self, head, n):
         if n == 1 or head is None or head.next is None:
             return head
         # find middle
