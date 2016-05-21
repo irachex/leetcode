@@ -27,12 +27,11 @@ class Solution(object):
         INF = 1 << 31
         min1 = min2 = INF
         for x in nums:
-            if x < min1:
+            if x <= min1:
                 min1 = x
-            elif x < min2:
-                if x > min1:
-                    min2 = x
-            elif x > min2:
+            elif x <= min2:
+                min2 = x
+            else:
                 return True
         return False
 
