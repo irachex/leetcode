@@ -106,10 +106,53 @@ class NestedIterator(object):
         return self.next_value is not None
 
 
+class NestedIterator2(object):
+
+    def __init__(self, nestedList):
+        """
+        Initialize your data structure here.
+        :type nestedList: List[NestedInteger]
+        """
+        self.stack = [[nestedList, 0]]
+        self.top = 0
+        self.next_value = self._next()
+
+    def _next(self):
+        while self.top >= 0:
+            t, p = self.stack[self.top]
+            if p < len(t):
+                x = t[p]
+                self.stack[self.top][1] += 1
+                if x.isInteger():
+                    return x.getInteger()
+                else:
+                    self.top += 1
+                    if self.top >= len(self.stack):
+                        self.stack.append([x.getList(), 0])
+                    else:
+                        self.stack[self.top] = [x.getList(), 0]
+            else:
+                self.top -= 1
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        x = self.next_value
+        self.next_value = self._next()
+        return x
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        return self.next_value is not None
+
+
 if __name__ == '__main__':
     def flattern(li):
         r = []
-        it = NestedIterator(li)
+        it = NestedIterator2(li)
         while it.hasNext():
             r.append(it.next())
         return r
