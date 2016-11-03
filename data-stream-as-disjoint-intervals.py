@@ -60,12 +60,11 @@ class SummaryRanges(object):
         :rtype: List[Interval]
         """
         r = []
-        for x in list(self.start_points):
+        for x in sorted(self.start_points):
             if x == self._father(self.starts, x):
                 r.append(Interval(x, self._father(self.ends, x)))
             else:
                 self.start_points.remove(x)
-        r.sort(key=lambda x: x.start)
         return r
 
 
