@@ -30,6 +30,19 @@ class Solution(object):
         return sum([x - min_v for x in nums])
 
 
+# a < b < c < d < e
+#
+# a + x = e, x = e - a
+# e, a + x, b + x, c + x, d + x
+# e, e, b + e - a, c + e - a, d + e - a
+#
+# e + y = d + e - a, y = d - a
+# d + e - a, d + e - a, d + e - a, b + e - a + d - a, ... c + e - a + d - a
+# ...
+#
+# sum([x - min(nums) for x in nums])
+
+
 if __name__ == '__main__':
     f = Solution().minMoves
     assert f([1, 2, 3]) == 3
