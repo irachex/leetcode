@@ -88,44 +88,32 @@ class Solution(object):
         :type s: str
         :rtype: NestedInteger
         """
-        s += '$'
         n = len(s)
 
-        def dfs(i, container=None):
-            sign = 1
-            x = 0
-            r = None
-            is_integer = False
-            while i < n:
-                c = s[i]
-                if c.isdigit() or c == '-':
-                    is_integer = True
-                    if c == '-':
+        def dfs(i):
+            if s[i] == '[':
+                r = NestedInteger()
+                i += 1
+                while i < n:
+                    if s[i] == '[':
+                        x, i = dfs(i)
+                        r.add(x)
+                    elif s[i] == ']':
+                        return r, i + 1
+                    elif s[i].isdigit() or s[i] == '-':
+                        x, i = dfs(i)
+                        r.add(x)
+                    else:
+                        i += 1
+            else:
+                x, sign = 0, 1
+                while i < n and (s[i].isdigit() or s[i] == '-'):
+                    if s[i] == '-':
                         sign = -1
                     else:
-                        x = x * 10 + ord(c) - 48
-                else:
-                    if c == '[':
-                        ret, end = dfs(i + 1, NestedInteger())
-                        if container:
-                            container.add(ret)
-                        else:
-                            r = ret
-                        i = end
-                    elif c == ']':
-                        if is_integer:
-                            container.add(NestedInteger(sign * x))
-                        return container, i
-                    elif c == ',':
-                        if is_integer:
-                            container.add(NestedInteger(sign * x))
-                    elif c == '$':
-                        if r is None:
-                            r = NestedInteger(sign * x)
-                    is_integer = False
-                    x = 0
-                    sign = 1
-                i += 1
+                        x = x * 10 + ord(s[i]) - 48
+                    i += 1
+                r = NestedInteger(sign * x)
             return r, i
 
         return dfs(0)[0]
@@ -133,6 +121,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     f = Solution().deserialize
+    print f('[123,456,[788,799,833],[[]],10,[]]')
     print f('[-1,-2,[-3,[-4],-5]]')
     print f('-3')
     print f("[123,[456,[789]]]")
