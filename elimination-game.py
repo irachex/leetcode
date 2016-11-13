@@ -27,16 +27,13 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        start, end = 1, n
+        start = 1
         step = 2
         num = n
         while num > 1:
             if step > 0:
                 start += step / 2
-                if num & 1:
-                    end -= step / 2
             else:
-                end += step / 2
                 if num & 1:
                     start -= step / 2
             step = -step * 2
