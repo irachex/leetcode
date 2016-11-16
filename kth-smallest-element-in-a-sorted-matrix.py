@@ -95,6 +95,24 @@ class Solution(object):
                 right = mid - 1
         return ans
 
+    def kthSmallest_builtin_heapq(self, matrix, k):  # Bulitin Heap, O(KlogN)
+        """
+        :type matrix: List[List[int]]
+        :type k: int
+        :rtype: int
+        """
+        import heapq
+        n = len(matrix)
+        h = []
+        for i, x in enumerate(matrix[0]):
+            heapq.heappush(h, (x, 0, i))
+        for i in xrange(k - 1):
+            v, x, y = heapq.heappop(h)
+            if x + 1 < n:
+                x += 1
+                heapq.heappush(h, (matrix[x][y], x, y))
+        return heapq.heappop(h)[0]
+
     def kthSmallest_Heap(self, matrix, k):  # Heap, O(KlogN)
         """
         :type matrix: List[List[int]]
