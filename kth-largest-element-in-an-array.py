@@ -12,6 +12,8 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ array's length.
 '''
 
+import random
+
 
 class Solution(object):
     def findKthLargest_heap(self, nums, k):  # O(NlogK)
@@ -30,9 +32,8 @@ class Solution(object):
         :rtype: int
         """
         n = len(nums)
-        import random
         random.shuffle(nums)
-        return quickselect(nums, 0, n - 1, n - k + 1)
+        return quickselect2(nums, 0, n - 1, n - k + 1)
 
 
 def quickselect(a, start, end, k):
@@ -53,10 +54,32 @@ def quickselect(a, start, end, k):
         return quickselect(a, i + 1, end, k)
 
 
+def quickselect2(a, left, right, k):
+    if left == right:
+        return a[left]
+    pivot = random.randint(left, right)
+    a[left], a[pivot] = a[pivot], a[left]
+
+    i = left
+    for j in xrange(left + 1, right + 1):
+        if a[j] < a[left]:
+            i += 1
+            a[i], a[j] = a[j], a[i]
+
+    a[i], a[left] = a[left], a[i]
+
+    if i == k - 1:
+        return a[i]
+    elif i > k - 1:
+        return quickselect2(a, left, i - 1, k)
+    else:
+        return quickselect2(a, i + 1, right, k)
+
+
 if __name__ == '__main__':
     f = Solution().findKthLargest
     assert f([99, 99], 1) == 99
     assert f([2, 1], 2) == 1
     assert f([-1, -1], 2) == -1
     assert f([1], 1) == 1
-    assert f([3,2,1,5,6,4], 2) == 5
+    assert f([3, 2, 1, 5, 6, 4], 2) == 5
