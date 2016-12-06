@@ -9,22 +9,20 @@ You may assume that the array is non-empty and the majority element always exist
 '''
 
 class Solution(object):
-    def majorityElement(self, nums):
+    def majorityElement(self, nums):  # Boyer-Moore Majority Vote Algorithm
         """
         :type nums: List[int]
         :rtype: int
         """
-        m = nums[0]
-        cnt = 1
-        for i in xrange(1, len(nums)):
-            if nums[i] == m:
-                cnt += 1
+        candidate = count = 0
+        for x in nums:
+            if count == 0:
+                candidate = x
+            if candidate == x:
+                count += 1
             else:
-                cnt -= 1
-                if cnt < 0:
-                    m = nums[i]
-                    cnt = 1
-        return m
+                count -= 1
+        return candidate
 
 
 if __name__ == '__main__':
